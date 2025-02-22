@@ -9,31 +9,72 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO: Make this class a Rest Controller
+@RestController
 public class BankController {
-
-    // TODO Autowired the BankService class
+    @Autowired
     private BankService bankService;
 
-    // TODO: API to Create a new account
-    
+    @PostMapping("/accounts")
+    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+        Account createdAccount = bankService.createAccount(account.getAccountHolderName(), account.getInitialDeposit());
+        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+    }
 
-    // TODO: API to Get all accounts
-    
+    @GetMapping("/accounts")
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        List<Account> accounts = bankService.getAllAccounts();
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
 
-    // TODO: API to Get an account by ID
-    
+    @GetMapping("/accounts/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable int id) {
+        Account account = bankService.getAccountById(id);
+        if (account != null) {
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    // TODO: API to Deposit money
-    
+    @PostMapping("/accounts/{id}/deposit")
+    public ResponseEntity<String> depositMoney(@PathVariable int id, @RequestParam double amount) {
+        Boolean success = bankService.depositMoney(id, amount);
+        if (success) {
+            return new ResponseEntity<>("Deposit successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    // TODO: API to Withdraw money
-    
+    @PostMapping("/accounts/{id}/withdraw")
+    public ResponseEntity<String> withdrawMoney(@PathVariable int id, @RequestParam double amount) {
+        boolean success = bankService.withdrawMoney(id, amount);
+        if (success) {
+            return new ResponseEntity<>("WithDrawal Sucessful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    // TODO: API to Transfer money between accounts
-    
+    @PostMapping("/accounts/transfer")
+    public ResponseEntity<String> transferMoney(@RequestParam int fromAccountId, @RequestParam int toAccountId,
+            @RequestParam double amount) {
+        boolean success = bankService.transferMoney(fromAccountId, toAccountId, amount);
+        if (success) {
+            return new ResponseEntity<>("Transfer successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Transfer failed", HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: API to Delete an account
-    
-    
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable int id) {
+        boolean deleted = bankService.deleteAccount(id);
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

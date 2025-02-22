@@ -1,36 +1,66 @@
 package com.bankmgmt.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bankmgmt.app.entity.Account;
-import org.springframework.stereotype.Service;
-
-import java.sql.SQLOutput;
-import java.util.*;
-
 
 public class BankService {
 
-    private List<Account> accounts = new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
     private Integer currentId = 1;
 
-    // TODO: Method to Create a new Account
-    
+    // Method to Create a new Account
+    public Account createAccount(String accountHolderName, double initialBalance) {
+        Account newAccount = new Account(currentId++, accountHolderName, "defaultType", initialBalance,
+                "defaultStatus");
+        accounts.add(newAccount);
+        return newAccount;
+    }
 
-    // TODO: Method to Get All Accounts
-    
+    // Method to Get All Accounts
+    public List<Account> getAllAccounts() {
+        return accounts;
+    }
 
-    // TODO: Method to Get Account by ID
-    
+    // Method to Get Account by ID
+    public Account getAccountById(int accountId) {
+        return accounts.stream()
+                .filter(account -> account.getId() == accountId)
+                .findFirst()
+                .orElse(null);
+    }
 
-    // TODO: Method to Deposit Money to the specified account id
-    
+    // Method to Deposit Money to the specified account id
+    public boolean depositMoney(int accountId, double amount) {
+        Account account = getAccountById(accountId);
+        if (account != null) {
+            account.setBalance(account.getBalance() + amount);
+            return true;
+        }
+        return false;
+    }
 
-    // TODO: Method to Withdraw Money from the specified account id
-    
+    // Method to Withdraw Money from the specified account id
+    public boolean withdrawMoney(int accountId, double amount) {
+        Account account = getAccountById(accountId);
+        if (account != null && account.getBalance() >= amount) {
+            account.setBalance(account.getBalance() - amount);
+            return true;
+        }
+        return false;
+    }
 
-    // TODO: Method to Transfer Money from one account to another
-    
-    
-    // TODO: Method to Delete Account given a account id
+    // Method to Transfer Money from one account to another
+    public boolean transferMoney(int fromAccountId, int toAccountId, double amount) {
+        if (withdrawMoney(fromAccountId, amount)) {
+            return depositMoney(toAccountId, amount);
+        }
+        return false;
+    }
 
-
+    // Method to Delete Account given an account id
+    public boolean deleteAccount(int accountId) {
+        return accounts.removeIf(account -> account.getId() == accountId);
+    }
 }

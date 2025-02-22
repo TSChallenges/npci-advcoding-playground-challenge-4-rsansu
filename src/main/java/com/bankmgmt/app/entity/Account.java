@@ -8,7 +8,6 @@ public class Account {
     private String email;
 
     // Constructors, getters, and setters
-   
 
     public Account(Integer id, String accountHolderName, String accountType, Double balance, String email) {
         this.id = id;
@@ -19,7 +18,7 @@ public class Account {
     }
 
     // TODO: Add getters and setters
- public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -58,6 +57,7 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public Account() {
     }
 
