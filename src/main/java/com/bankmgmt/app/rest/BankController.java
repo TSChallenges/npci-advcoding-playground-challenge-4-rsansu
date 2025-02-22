@@ -23,7 +23,7 @@ public class BankController {
 
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        Account createdAccount = bankService.createAccount(account.getAccountHolderName(), 0.0);
+        Account createdAccount = bankService.createAccount(account.getAccountHolderName(), account.getAccountType(),account.getEmail());
         return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 

@@ -1,23 +1,25 @@
 package com.bankmgmt.app.entity;
 
 public class Account {
+    // Fields
     private Integer id;
     private String accountHolderName;
-    private String accountType;
     private Double balance;
+    private String accountType;
     private String email;
 
     // Constructors, getters, and setters
 
-    public Account(Integer id, String accountHolderName, String accountType, Double balance, String email) {
+    public Account(Integer id, String accountHolderName,  Double balance, String accountType,String email) {
         this.id = id;
         this.accountHolderName = accountHolderName;
-        this.accountType = accountType;
         this.balance = balance;
+        this.accountType = accountType;
         this.email = email;
     }
 
-   
+    public Account() {
+    }
 
     public Integer getId() {
         return id;
@@ -58,8 +60,4 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Account() {
-    }
-
 }
