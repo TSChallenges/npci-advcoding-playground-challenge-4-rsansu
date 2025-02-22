@@ -3,8 +3,11 @@ package com.bankmgmt.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.bankmgmt.app.entity.Account;
 
+@Service
 public class BankService {
 
     private final List<Account> accounts = new ArrayList<>();
