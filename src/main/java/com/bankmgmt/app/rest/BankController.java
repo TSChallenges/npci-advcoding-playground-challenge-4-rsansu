@@ -1,13 +1,20 @@
 package com.bankmgmt.app.rest;
 
-import com.bankmgmt.app.entity.Account;
-import com.bankmgmt.app.service.BankService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.bankmgmt.app.entity.Account;
+import com.bankmgmt.app.service.BankService;
 
 @RestController
 public class BankController {
@@ -16,7 +23,7 @@ public class BankController {
 
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        Account createdAccount = bankService.createAccount(account.getAccountHolderName(), account.getInitialDeposit());
+        Account createdAccount = bankService.createAccount(account.getAccountHolderName(), 0.0);
         return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 

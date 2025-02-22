@@ -11,7 +11,7 @@ public class BankService {
     private Integer currentId = 1;
 
     // Method to Create a new Account
-    public Account createAccount(String accountHolderName, double initialBalance) {
+    public Account createAccount(String accountHolderName, double initialBalance ) {
         Account newAccount = new Account(currentId++, accountHolderName, "defaultType", initialBalance,
                 "defaultStatus");
         accounts.add(newAccount);
